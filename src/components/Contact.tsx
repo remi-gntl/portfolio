@@ -33,10 +33,10 @@ const Contact = () => {
           </a>
           
           <div className="flex gap-4">
-            <a href="https://linkedin.com" target="_blank" className="p-4 bg-slate-800 rounded-xl hover:bg-slate-700 hover:text-blue-400 transition-colors border border-slate-700">
+            <a href="https://www.linkedin.com/in/remi-gentil/" target="_blank" className="p-4 bg-slate-800 rounded-xl hover:bg-slate-700 hover:text-blue-400 transition-colors border border-slate-700">
               <Linkedin size={24} />
             </a>
-            <a href="https://github.com" target="_blank" className="p-4 bg-slate-800 rounded-xl hover:bg-slate-700 hover:text-white transition-colors border border-slate-700">
+            <a href="https://github.com/remi-gntl" target="_blank" className="p-4 bg-slate-800 rounded-xl hover:bg-slate-700 hover:text-white transition-colors border border-slate-700">
               <Github size={24} />
             </a>
           </div>

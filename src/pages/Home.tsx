@@ -1,17 +1,10 @@
-import Navbar from '../components/Navbar';
 import Hero from '../components/Hero';
-import Skills from '../components/Skills';
-import Projects from '../components/Projects';
-import Contact from '../components/Contact';
 
+// Home ne sert plus que de conteneur pour le Hero dans cette nouvelle structure
 const Home = () => {
   return (
-    <div className="bg-background min-h-screen text-white font-sans">
-      <Navbar />
+    <div id="home">
       <Hero />
-      <Skills />
-      <Projects />
-      <Contact />
     </div>
   );
 };

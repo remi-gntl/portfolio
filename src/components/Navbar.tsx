@@ -85,9 +85,9 @@ const Navbar = () => {
           ))}
           {/* Icônes version Mobile */}
           <div className="flex gap-4 pt-4 border-t border-slate-700">
-            <a href="https://github.com" className="text-gray-400"><Github size={20}/></a>
-            <a href="https://linkedin.com" className="text-gray-400"><Linkedin size={20}/></a>
-            <a href="mailto:ton@email.com" className="text-gray-400"><Mail size={20}/></a>
+            <a href="https://github.com/remi-gntl" className="text-gray-400"><Github size={20}/></a>
+            <a href="https://www.linkedin.com/in/remi-gentil/" className="text-gray-400"><Linkedin size={20}/></a>
+            <a href="mailto:remi.gentil.33@gmail.com" className="text-gray-400"><Mail size={20}/></a>
           </div>
         </div>
       )}

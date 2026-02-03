@@ -9,3 +9,9 @@ export interface Project {
   TechStack: string[];
   Features: string[];
 }
+export interface Skill {
+  id: number;
+  name: string;
+  category: string;
+  image: string;
+}
