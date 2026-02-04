@@ -13,9 +13,9 @@ const Contact = () => {
     setLoading(true);
     setError('');
 
-    const serviceID = 'service_0i17amh';
-    const templateID = 'template_9vuwodp';
-    const publicKey = 'uCh_tjR2sl5dPFKRF';
+    const serviceID = import.meta.env.VITE_EMAIL_SERVICE_ID;
+    const templateID = import.meta.env.VITE_EMAIL_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAIL_PUBLIC_KEY;
 
     if (!formRef.current) return;
 
