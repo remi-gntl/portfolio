@@ -61,10 +61,22 @@ function App() {
               path="/"
               element={
                 <main className="relative z-10">
-                  <Home />
-                  <About />
-                  <Portfolio />
-                  <Contact />
+                  {/* AJOUT DES IDs POUR LE SCROLL */}
+                  <section id="home">
+                    <Home />
+                  </section>
+                  
+                  <section id="about">
+                    <About />
+                  </section>
+                  
+                  <section id="portfolio">
+                    <Portfolio />
+                  </section>
+                  
+                  <section id="contact">
+                    <Contact />
+                  </section>
                 </main>
               }
             />
@@ -86,7 +98,6 @@ function App() {
               <Route path="/admin/projects/new" element={<CreateProject />} />
               <Route path="/admin/projects/edit/:id" element={<EditProject />} />
               <Route path="/admin/skills/new" element={<CreateSkill />} />
-              {/* C'est ici qu'on ajoutera la gestion des projets plus tard */}
             </Route>
 
             {/* --- 404 (Doit toujours être à la fin) --- */}

@@ -5,3 +5,11 @@
 body {
   @apply bg-background text-white antialiased;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+section {
+  scroll-margin-top: 100px;
+}

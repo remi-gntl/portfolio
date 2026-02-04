@@ -14,9 +14,9 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { name: 'Accueil', href: '#' },
-    { name: 'Projets', href: '#projects' },
-    { name: 'Compétences', href: '#skills' },
+    { name: 'Accueil', href: '#home' },
+    { name: 'À propos', href: '#about' },
+    { name: 'Portfolio', href: '#portfolio' },
     { name: 'Contact', href: '#contact' },
   ];
 
