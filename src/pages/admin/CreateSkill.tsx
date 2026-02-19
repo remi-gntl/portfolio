@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Upload, Save, X } from 'lucide-react';
+import { ArrowLeft, Upload, Save, X, Star } from 'lucide-react';
 import { compressImage } from '../../lib/imageOptimizer';
 
 const CreateSkill = () => {
@@ -11,7 +11,8 @@ const CreateSkill = () => {
   const [preview, setPreview] = useState<string | null>(null);
 
   const [name, setName] = useState('');
-  const [category, setCategory] = useState('Frontend'); // Valeur par défaut
+  const [category, setCategory] = useState('Frontend');
+  const [level, setLevel] = useState(3); //niveau par défaut : 3/5
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -29,14 +30,12 @@ const CreateSkill = () => {
       let imageUrl = '';
 
       if (imageFile) {
-        // Compression
         const compressedFile = await compressImage(imageFile);
         const fileExt = 'webp';
         const fileName = `skill-${Date.now()}.${fileExt}`;
         
-        // Upload
         const { error: uploadError } = await supabase.storage
-          .from('projects') // On peut utiliser le même bucket
+          .from('projects')
           .upload(fileName, compressedFile);
 
         if (uploadError) throw uploadError;
@@ -48,12 +47,12 @@ const CreateSkill = () => {
         imageUrl = publicUrl;
       }
 
-      // Insert
       const { error: dbError } = await supabase.from('skills').insert([
         {
           name,
           category,
-          image: imageUrl
+          image: imageUrl,
+          level
         }
       ]);
 
@@ -107,11 +106,39 @@ const CreateSkill = () => {
             <select value={category} onChange={(e) => setCategory(e.target.value)} className="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 focus:border-blue-500 outline-none text-white">
               <option value="Frontend">Frontend</option>
               <option value="Backend">Backend</option>
-              <option value="DevOps">DevOps</option>
-              <option value="Mobile">Mobile</option>
-              <option value="Tools">Outils / Autre</option>
-              <option value="System">Système & Réseau</option>
+              <option value="DevOps & Infra">DevOps & Infrastructure</option>
+              <option value="Bases de données">Bases de données</option>
+              <option value="Outils & Productivité">Outils & Productivité</option>
+              <option value="Gestion de projet">Gestion de projet</option>
+              <option value="Cybersécurité">Cybersécurité</option>
             </select>
+          </div>
+
+          {/* SÉLECTEUR DE NIVEAU EN ÉTOILES */}
+          <div>
+            <label className="block text-sm font-medium text-gray-400 mb-2">Niveau de maîtrise</label>
+            <div className="flex gap-2">
+              {[1, 2, 3, 4, 5].map((star) => (
+                <button
+                  key={star}
+                  type="button"
+                  onClick={() => setLevel(star)}
+                  className="transition-all hover:scale-110"
+                >
+                  <Star 
+                    size={32} 
+                    className={star <= level ? 'fill-yellow-400 text-yellow-400' : 'text-gray-600'} 
+                  />
+                </button>
+              ))}
+            </div>
+            <p className="text-xs text-gray-500 mt-2">
+              {level === 1 && "Débutant - Notions de base"}
+              {level === 2 && "Intermédiaire - Peut réaliser des tâches simples"}
+              {level === 3 && "Confirmé - Autonome sur la plupart des projets"}
+              {level === 4 && "Avancé - Maîtrise approfondie"}
+              {level === 5 && "Expert - Référent sur la technologie"}
+            </p>
           </div>
 
           <button type="submit" disabled={loading} className="w-full flex justify-center items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-xl font-bold transition-all disabled:opacity-50 mt-4">

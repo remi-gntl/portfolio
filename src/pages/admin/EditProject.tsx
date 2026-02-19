@@ -5,7 +5,7 @@ import { compressImage } from '../../lib/imageOptimizer';
 import { ArrowLeft, Upload, Save, X, Loader2 } from 'lucide-react';
 
 const EditProject = () => {
-  const { id } = useParams(); //ID depuis l'URL
+  const { id } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -19,7 +19,9 @@ const EditProject = () => {
     github: '',
     link: '',
     techStack: '', 
-    features: '' 
+    features: '',
+    year: new Date().getFullYear(),
+    display_order: 1
   });
 
   // 1. Charger les données du projet existant
@@ -46,8 +48,10 @@ const EditProject = () => {
           description: data.Description || '',
           github: data.Github || '',
           link: data.Link || '',
-          techStack: data.TechStack ? data.TechStack.join(', ') : '', // Tableau -> String
-          features: data.Features ? data.Features.join(', ') : ''
+          techStack: data.TechStack ? data.TechStack.join(', ') : '',
+          features: data.Features ? data.Features.join(', ') : '',
+          year: data.year || new Date().getFullYear(),
+          display_order: data.display_order || 1
         });
         setPreview(data.Img || null);
       }
@@ -58,7 +62,8 @@ const EditProject = () => {
   }, [id, navigate]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const value = e.target.type === 'number' ? parseInt(e.target.value) : e.target.value;
+    setFormData({ ...formData, [e.target.name]: value });
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -85,7 +90,7 @@ const EditProject = () => {
         
         const { error: uploadError } = await supabase.storage
           .from('projects')
-          .upload(fileName, compressedFile); // On envoie le compressé
+          .upload(fileName, compressedFile);
 
         if (uploadError) throw uploadError;
 
@@ -99,7 +104,7 @@ const EditProject = () => {
       const techArray = formData.techStack.split(',').map(item => item.trim()).filter(i => i);
       const featureArray = formData.features.split(',').map(item => item.trim()).filter(i => i);
 
-      // UPDATE (au lieu de INSERT)
+      // UPDATE
       const { error: dbError } = await supabase
         .from('projects')
         .update({
@@ -109,9 +114,11 @@ const EditProject = () => {
           Link: formData.link,
           Img: imageUrl,
           TechStack: techArray,
-          Features: featureArray
+          Features: featureArray,
+          year: formData.year,
+          display_order: formData.display_order
         })
-        .eq('id', id); // Important : on cible le bon projet !
+        .eq('id', id);
 
       if (dbError) throw dbError;
 
@@ -166,6 +173,37 @@ const EditProject = () => {
                 <label className="block text-sm font-medium text-gray-400 mb-1">Description</label>
                 <textarea name="description" required rows={4} value={formData.description} onChange={handleChange} className="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 focus:border-blue-500 outline-none" />
               </div>
+
+              {/*CHAMPS ANNÉE ET ORDRE */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-400 mb-1">Année</label>
+                  <input 
+                    type="number" 
+                    name="year" 
+                    required 
+                    value={formData.year} 
+                    onChange={handleChange} 
+                    className="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 focus:border-blue-500 outline-none" 
+                    min="2000"
+                    max="2100"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-400 mb-1">Ordre d'affichage</label>
+                  <input 
+                    type="number" 
+                    name="display_order" 
+                    required 
+                    value={formData.display_order} 
+                    onChange={handleChange} 
+                    className="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 focus:border-blue-500 outline-none" 
+                    min="1"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">Plus le chiffre est petit, plus il apparaît en premier</p>
+                </div>
+              </div>
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-400 mb-1">GitHub</label>

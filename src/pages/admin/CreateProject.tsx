@@ -17,12 +17,15 @@ const CreateProject = () => {
     github: '',
     link: '',
     techStack: '',
-    features: ''   
+    features: '',
+    year: new Date().getFullYear(),
+    display_order: 1
   });
 
   // Gestion des champs textes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const value = e.target.type === 'number' ? parseInt(e.target.value) : e.target.value;
+    setFormData({ ...formData, [e.target.name]: value });
   };
 
   // Gestion de l'image (Prévisualisation)
@@ -43,18 +46,16 @@ const CreateProject = () => {
       let imageUrl = '';
 
       if (imageFile) {
-        // On affiche un petit log pour voir la différence
         console.log(`Taille originale: ${imageFile.size / 1024 / 1024} MB`);
         const compressedFile = await compressImage(imageFile);
         console.log(`Taille compressée: ${compressedFile.size / 1024 / 1024} MB`);
 
-        // 2. Upload du fichier compressé
-        const fileExt = 'webp'; // On sait que c'est du webp maintenant
+        const fileExt = 'webp';
         const fileName = `${Date.now()}.${fileExt}`;
         
         const { error: uploadError } = await supabase.storage
           .from('projects')
-          .upload(fileName, compressedFile); // On envoie compressedFile !
+          .upload(fileName, compressedFile);
 
         if (uploadError) throw uploadError;
 
@@ -65,11 +66,10 @@ const CreateProject = () => {
         imageUrl = publicUrl;
       }
 
-      // 2. Transformation des strings en tableaux (pour TechStack et Features)
       const techArray = formData.techStack.split(',').map(item => item.trim()).filter(i => i);
       const featureArray = formData.features.split(',').map(item => item.trim()).filter(i => i);
 
-      // 3. Insertion en Base de Données
+      // Insertion en Base de Données - AJOUT des nouveaux champs
       const { error: dbError } = await supabase.from('projects').insert([
         {
           Title: formData.title,
@@ -77,14 +77,15 @@ const CreateProject = () => {
           Github: formData.github,
           Link: formData.link,
           Img: imageUrl,
-          TechStack: techArray, // Supabase attend du JSONB (tableau)
-          Features: featureArray
+          TechStack: techArray,
+          Features: featureArray,
+          year: formData.year,
+          display_order: formData.display_order
         }
       ]);
 
       if (dbError) throw dbError;
 
-      // Succès !
       navigate('/admin/dashboard');
 
     } catch (error) {
@@ -154,6 +155,38 @@ const CreateProject = () => {
               <div>
                 <label className="block text-sm font-medium text-gray-400 mb-1">Description</label>
                 <textarea name="description" required rows={4} value={formData.description} onChange={handleChange} className="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 focus:border-blue-500 outline-none transition-colors" placeholder="Description détaillée..." />
+              </div>
+
+              {/*CHAMPS ANNÉE ET ORDRE */}
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-400 mb-1">Année</label>
+                  <input 
+                    type="number" 
+                    name="year" 
+                    required 
+                    value={formData.year} 
+                    onChange={handleChange} 
+                    className="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 focus:border-blue-500 outline-none transition-colors" 
+                    placeholder="2024" 
+                    min="2000"
+                    max="2100"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-400 mb-1">Ordre d'affichage</label>
+                  <input 
+                    type="number" 
+                    name="display_order" 
+                    required 
+                    value={formData.display_order} 
+                    onChange={handleChange} 
+                    className="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 focus:border-blue-500 outline-none transition-colors" 
+                    placeholder="1" 
+                    min="1"
+                  />
+                  <p className="text-xs text-gray-500 mt-1">Plus le chiffre est petit, plus il apparaît en premier</p>
+                </div>
               </div>
 
               <div className="grid grid-cols-2 gap-4">

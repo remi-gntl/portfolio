@@ -4,14 +4,18 @@ export interface Project {
   Title: string;
   Description: string;
   Img: string;
-  Link: string;
-  Github: string;
   TechStack: string[];
-  Features: string[];
+  Link?: string; 
+  Github?: string;
+  Features?: string[];
+  display_order?: number;
+  year?: number;
 }
+
 export interface Skill {
   id: number;
   name: string;
   category: string;
   image: string;
+  level: number; 
 }

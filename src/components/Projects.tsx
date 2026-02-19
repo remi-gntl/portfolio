@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
 import type { Project } from "../types";
-import { Github, ExternalLink, Loader2 } from "lucide-react";
+import { Github, ExternalLink, Loader2, Calendar } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
@@ -9,17 +9,14 @@ const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
 
-  // Fonction pour récupérer les données
   const fetchProjects = async () => {
     try {
       const { data, error } = await supabase
         .from("projects")
         .select("*")
-        .order("id", { ascending: true });
+        .order("display_order", { ascending: true });
 
       if (error) throw error;
-
-      // On cast les données car TechStack est stocké en JSON
       setProjects((data as Project[]) || []);
     } catch (error) {
       console.error("Erreur lors du chargement des projets:", error);
@@ -28,7 +25,6 @@ const Projects = () => {
     }
   };
 
-  // On lance la récupération au chargement du composant
   useEffect(() => {
     fetchProjects();
   }, []);
@@ -45,8 +41,7 @@ const Projects = () => {
           <span className="text-primary">/</span> Mes Projets
         </h2>
         <p className="text-gray-400 max-w-2xl">
-          Une sélection de mes travaux techniques, du développement web à
-          l'infrastructure DevOps.
+          Un aperçu des projets sur lesquels j'ai travaillé et des technologies que je maîtrise.
         </p>
       </motion.div>
 
@@ -63,9 +58,9 @@ const Projects = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1 }}
-              className="group bg-surface rounded-xl overflow-hidden border border-slate-700/50 hover:border-primary/50 transition-all hover:shadow-xl hover:shadow-primary/10 flex flex-col"
+              className="group bg-slate-900/50 rounded-xl overflow-hidden border border-slate-800 hover:border-blue-500/50 transition-all hover:shadow-xl hover:shadow-blue-500/10 flex flex-col"
             >
-              {/* Image (Avec fallback si pas d'image) */}
+              {/* Image */}
               <div className="h-48 bg-slate-800 relative overflow-hidden">
                 {project.Img && !project.Img.includes("REPLACE") ? (
                   <img
@@ -79,28 +74,42 @@ const Projects = () => {
                   </div>
                 )}
 
+                {/* Badge année en haut à droite */}
+                {project.year && (
+                  <div className="absolute top-3 right-3 bg-blue-600/90 backdrop-blur-sm px-3 py-1 rounded-full flex items-center gap-1.5 text-white text-xs font-bold">
+                    <Calendar size={14} />
+                    {project.year}
+                  </div>
+                )}
+
                 {/* Overlay au survol */}
                 <div className="absolute inset-0 bg-slate-900/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4 backdrop-blur-sm">
-                  <a
-                    href={project.Github}
-                    target="_blank"
-                    className="p-2 bg-white text-slate-900 rounded-full hover:bg-primary hover:text-white transition-colors"
-                  >
-                    <Github size={20} />
-                  </a>
-                  <a
-                    href={project.Link}
-                    target="_blank"
-                    className="p-2 bg-white text-slate-900 rounded-full hover:bg-primary hover:text-white transition-colors"
-                  >
-                    <ExternalLink size={20} />
-                  </a>
+                  {project.Github && (
+                    <a
+                      href={project.Github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 bg-white text-slate-900 rounded-full hover:bg-blue-500 hover:text-white transition-colors"
+                    >
+                      <Github size={20} />
+                    </a>
+                  )}
+                  {project.Link && (
+                    <a
+                      href={project.Link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="p-2 bg-white text-slate-900 rounded-full hover:bg-blue-500 hover:text-white transition-colors"
+                    >
+                      <ExternalLink size={20} />
+                    </a>
+                  )}
                 </div>
               </div>
 
               {/* Contenu */}
               <div className="p-6 flex-1 flex flex-col">
-                <h3 className="text-xl font-bold mb-2 text-white group-hover:text-primary transition-colors">
+                <h3 className="text-xl font-bold mb-2 text-white group-hover:text-blue-400 transition-colors">
                   {project.Title}
                 </h3>
                 <p className="text-gray-400 text-sm mb-4 flex-1 line-clamp-3">
@@ -109,7 +118,7 @@ const Projects = () => {
 
                 <Link
                   to={`/project/${project.id}`}
-                  className="inline-flex items-center gap-2 text-sm text-primary font-bold hover:underline mb-4 w-fit"
+                  className="inline-flex items-center gap-2 text-sm text-blue-400 font-bold hover:underline mb-4 w-fit"
                 >
                   En savoir plus →
                 </Link>
