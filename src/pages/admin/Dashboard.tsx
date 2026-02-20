@@ -10,7 +10,6 @@ const Dashboard = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [skills, setSkills] = useState<Skill[]>([]);
 
-  // 1. Charger les données au démarrage
   useEffect(() => {
     fetchData();
   }, []);
@@ -18,14 +17,12 @@ const Dashboard = () => {
   const fetchData = async () => {
     try {
       setLoading(true);
-      // Récupérer les projets
       const { data: projectsData } = await supabase
         .from("projects")
         .select("*")
         .order("display_order", { ascending: true });
       if (projectsData) setProjects(projectsData as Project[]);
 
-      // Récupérer les skills
       const { data: skillsData } = await supabase
         .from("skills")
         .select("*")
@@ -38,13 +35,11 @@ const Dashboard = () => {
     }
   };
 
-  // 2. Fonction de Déconnexion
   const handleLogout = async () => {
     await supabase.auth.signOut();
     navigate("/admin/login");
   };
 
-  // 3. Fonction de Suppression Projet
   const handleDeleteProject = async (id: number) => {
     if (!window.confirm("Êtes-vous sûr de vouloir supprimer ce projet ?"))
       return;
@@ -55,7 +50,7 @@ const Dashboard = () => {
       alert("Erreur lors de la suppression");
       console.error(error);
     } else {
-      // On met à jour la liste locale sans recharger la page
+      //maj de la liste locale sans recharger la page
       setProjects(projects.filter((p) => p.id !== id));
     }
   };
@@ -93,12 +88,14 @@ const Dashboard = () => {
           </div>
 
           <div className="flex gap-4">
-            <button
-              onClick={() => navigate("/")}
-              className="text-gray-400 hover:text-white px-4 py-2 transition-colors"
+            <a
+              href="/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-400 hover:text-white px-4 py-2 transition-colors inline-block"
             >
               Voir le site
-            </button>
+            </a>
             <button
               onClick={handleLogout}
               className="flex items-center gap-2 bg-red-500/10 text-red-400 px-4 py-2 rounded-lg hover:bg-red-500/20 border border-red-500/20 transition-colors"
@@ -182,7 +179,7 @@ const Dashboard = () => {
                       <button
                         onClick={() =>
                           navigate(`/admin/projects/edit/${project.id}`)
-                        } // On créera cette route après
+                        }
                         className="p-2 bg-slate-800 text-blue-400 rounded-lg hover:bg-blue-500 hover:text-white transition-colors"
                         title="Modifier"
                       >
@@ -202,7 +199,6 @@ const Dashboard = () => {
             </div>
           </div>
 
-          {/* --- SECTION SKILLS --- */}
           <div className="bg-slate-900 rounded-2xl border border-slate-800 overflow-hidden">
             <div className="p-6 border-b border-slate-800 flex justify-between items-center bg-slate-800/50">
               <h2 className="text-xl font-bold flex items-center gap-2">

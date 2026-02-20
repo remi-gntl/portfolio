@@ -5,10 +5,7 @@ import { Github, Linkedin, Mail, ChevronRight, Download } from "lucide-react";
 const Hero = () => {
   return (
     <section className="relative pt-32 pb-20 px-6 min-h-screen flex items-center z-10">
-      {/* Plus de blobs ici, on laisse le composant <Background /> de App.tsx faire le travail */}
-
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        {/* --- CÔTÉ GAUCHE : TEXTE & INFOS --- */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
@@ -109,24 +106,20 @@ const Hero = () => {
           </div>
         </motion.div>
 
-        {/* --- CÔTÉ DROIT : TON ILLUSTRATION ANIMÉE --- */}
         <motion.div
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, delay: 0.2 }}
           className="hidden lg:flex items-center justify-center relative"
         >
-          {/* Effet de lueur derrière l'image */}
           <div className="absolute inset-0 bg-gradient-to-tr from-blue-600/20 to-purple-600/20 rounded-full blur-[80px] animate-pulse"></div>
-
-          {/* L'image flottante */}
           <motion.img
             src="/hero-illustration.gif"
             alt="Illustration DevOps"
             className="relative z-10 w-full max-w-[280px] md:max-w-[360px] lg:max-w-[420px] drop-shadow-2xl"
             animate={{
-              y: [0, -20, 0], // Animation de flottement (Haut/Bas)
-              rotate: [0, 1, -1, 0], // Légère rotation pour le dynamisme
+              y: [0, -20, 0],
+              rotate: [0, 1, -1, 0],
             }}
             transition={{
               duration: 6,

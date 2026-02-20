@@ -37,7 +37,6 @@ const ProjectDetails = () => {
 
         <div className="grid lg:grid-cols-12 gap-12">
           
-          {/* COLONNE GAUCHE (Description, Stats, Techs) - 5 colonnes */}
           <div className="lg:col-span-5 space-y-10">
             
             <p className="text-gray-300 text-lg leading-relaxed">
@@ -84,7 +83,6 @@ const ProjectDetails = () => {
 
           </div>
 
-          {/* COLONNE DROITE (Image & Features) - 7 colonnes */}
           <div className="lg:col-span-7 space-y-8">
             
             {/* Image Container */}

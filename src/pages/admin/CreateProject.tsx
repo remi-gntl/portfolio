@@ -22,13 +22,11 @@ const CreateProject = () => {
     display_order: 1
   });
 
-  // Gestion des champs textes
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const value = e.target.type === 'number' ? parseInt(e.target.value) : e.target.value;
     setFormData({ ...formData, [e.target.name]: value });
   };
 
-  // Gestion de l'image (Prévisualisation)
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
@@ -37,7 +35,6 @@ const CreateProject = () => {
     }
   };
 
-  // SOUMISSION DU FORMULAIRE
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -69,7 +66,6 @@ const CreateProject = () => {
       const techArray = formData.techStack.split(',').map(item => item.trim()).filter(i => i);
       const featureArray = formData.features.split(',').map(item => item.trim()).filter(i => i);
 
-      // Insertion en Base de Données - AJOUT des nouveaux champs
       const { error: dbError } = await supabase.from('projects').insert([
         {
           Title: formData.title,
@@ -111,8 +107,6 @@ const CreateProject = () => {
         <form onSubmit={handleSubmit} className="space-y-8">
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            
-            {/* COLONNE GAUCHE : IMAGE */}
             <div className="md:col-span-1">
               <label className="block text-sm font-medium text-gray-400 mb-2">Image du projet</label>
               <div className={`relative aspect-video rounded-xl border-2 border-dashed border-slate-700 flex flex-col items-center justify-center overflow-hidden transition-colors ${!preview ? 'hover:border-blue-500 hover:bg-slate-800/50' : 'border-blue-500'}`}>
@@ -144,7 +138,6 @@ const CreateProject = () => {
               </div>
             </div>
 
-            {/* COLONNE DROITE : INFOS */}
             <div className="md:col-span-2 space-y-6">
               
               <div>
@@ -157,7 +150,6 @@ const CreateProject = () => {
                 <textarea name="description" required rows={4} value={formData.description} onChange={handleChange} className="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 focus:border-blue-500 outline-none transition-colors" placeholder="Description détaillée..." />
               </div>
 
-              {/*CHAMPS ANNÉE ET ORDRE */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-400 mb-1">Année</label>

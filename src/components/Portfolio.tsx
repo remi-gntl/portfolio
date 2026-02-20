@@ -28,7 +28,6 @@ const Portfolio = () => {
         </p>
       </div>
 
-      {/* Les Onglets (Tabs) */}
       <div className="flex justify-center mb-12">
         <div className="bg-slate-900/80 p-1.5 rounded-full border border-slate-800 inline-flex relative">
           {/* Bouton Projets */}
@@ -55,7 +54,6 @@ const Portfolio = () => {
             <Layers size={18} /> Compétences
           </button>
 
-          {/* Fond animé qui bouge entre les boutons */}
           <div
             className={`absolute top-1.5 bottom-1.5 rounded-full bg-blue-600 transition-all duration-300 ease-out ${
               activeTab === "projects"
@@ -66,7 +64,6 @@ const Portfolio = () => {
         </div>
       </div>
 
-      {/* Contenu qui change */}
       <div className="min-h-[400px]">
         {activeTab === "projects" ? <Projects /> : <TechStack />}
       </div>

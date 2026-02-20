@@ -24,7 +24,6 @@ const EditProject = () => {
     display_order: 1
   });
 
-  // 1. Charger les données du projet existant
   useEffect(() => {
     const fetchProject = async () => {
       if (!id) return;
@@ -74,7 +73,6 @@ const EditProject = () => {
     }
   };
 
-  // 2. Sauvegarder les modifications
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSaving(true);
@@ -104,7 +102,6 @@ const EditProject = () => {
       const techArray = formData.techStack.split(',').map(item => item.trim()).filter(i => i);
       const featureArray = formData.features.split(',').map(item => item.trim()).filter(i => i);
 
-      // UPDATE
       const { error: dbError } = await supabase
         .from('projects')
         .update({
@@ -174,7 +171,6 @@ const EditProject = () => {
                 <textarea name="description" required rows={4} value={formData.description} onChange={handleChange} className="w-full bg-slate-800 border border-slate-700 rounded-lg p-3 focus:border-blue-500 outline-none" />
               </div>
 
-              {/*CHAMPS ANNÉE ET ORDRE */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-400 mb-1">Année</label>

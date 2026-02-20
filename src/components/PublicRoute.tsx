@@ -11,14 +11,12 @@ const PublicRoute = () => {
     });
   }, []);
 
-  if (session === null) return null; // Chargement silencieux
+  if (session === null) return null;
 
-  // Si l'utilisateur EST connecté, on le vire vers le dashboard
   if (session) {
     return <Navigate to="/admin/dashboard" replace />;
   }
 
-  // Sinon, on le laisse accéder à la page (Login)
   return <Outlet />;
 };
 

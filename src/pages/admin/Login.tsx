@@ -24,7 +24,7 @@ const Login = () => {
       setError('Identifiants incorrects');
       setLoading(false);
     } else {
-      // Si c'est bon, on redirige vers le dashboard
+      //si ok on redirige vers le dashboard
       navigate('/admin/dashboard');
     }
   };
