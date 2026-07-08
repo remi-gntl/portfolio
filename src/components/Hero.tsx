@@ -12,14 +12,6 @@ const Hero = () => {
           transition={{ duration: 0.7 }}
           className="space-y-8"
         >
-          {/* Badge "Disponible" */}
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-blue-900/30 border border-blue-500/30 text-blue-300 text-sm font-medium backdrop-blur-md">
-            <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-blue-500"></span>
-            </span>
-            En recherche d'alternance
-          </div>
 
           {/* Titre Principal & Texte Animé */}
           <div className="space-y-4">
@@ -51,13 +43,19 @@ const Hero = () => {
             </div>
 
             <p className="text-lg text-gray-400 max-w-xl leading-relaxed border-l-2 border-blue-500/30 pl-6">
-              Étudiant en BUT Informatique à l’IUT de Bayonne et alternant chez
+              Étudiant en BUT Informatique à l'IUT de Bayonne, actuellement
+              alternant chez
               <span className="text-white font-semibold">
                 {" "}
                 The Gill Corporation
+              </span>
+              . À la rentrée, je rejoins le{" "}
+              <span className="text-white font-semibold">CNAM Paris</span>{" "}
+              (cycle ingénieur DICASI) en alternance chez{" "}
+              <span className="text-white font-semibold">
+                CNP Assurances
               </span>{" "}
-              en tant que développeur full stack, orienté gestion de projets et
-              développement de solutions informatiques sur des cas réels.
+              (Unité SI Comptabilité, Fiscalité et Data).
             </p>
           </div>
 

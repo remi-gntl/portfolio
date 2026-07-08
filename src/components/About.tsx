@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Briefcase, GraduationCap, User, Target } from "lucide-react";
+import { Briefcase, GraduationCap, User, Rocket } from "lucide-react";
 
 const About = () => {
   return (
@@ -53,11 +53,12 @@ const About = () => {
                   {/* Bio */}
                   <p className="text-gray-300 leading-relaxed text-base md:text-lg mb-6">
                     Je pilote des projets de A à Z : conception, développement,
-                    déploiement et amélioration continue. <br /> Mon objectif ?
-                    Intégrer une école d'ingénieur pour monter en compétences
-                    techniques et managériales, avec un focus sur la{" "}
-                    <span className="text-blue-400 font-semibold">cybersécurité</span> et le{" "}
-                    <span className="text-cyan-400 font-semibold">lead de projets</span>.
+                    déploiement et amélioration continue. <br /> À la rentrée,
+                    je rejoins le{" "}
+                    <span className="text-blue-400 font-semibold">
+                      CNAM Paris
+                    </span>{" "}
+                    pour un cycle ingénieur.
                   </p>
 
                   {/* Séparateur */}
@@ -95,22 +96,23 @@ const About = () => {
             viewport={{ once: true }}
             className="space-y-6"
           >
-            {/* Objectifs / En recherche */}
+            {/* Prochaine étape */}
             <div className="bg-gradient-to-br from-blue-900/20 to-cyan-900/20 p-6 rounded-2xl border border-blue-500/20">
               <h4 className="text-white font-bold mb-3 flex items-center gap-2">
-                <Target className="w-5 h-5 text-blue-400" />
-                En recherche
+                <Rocket className="w-5 h-5 text-blue-400" />
+                Prochaine étape — Rentrée 2026
               </h4>
               <p className="text-gray-300 text-sm leading-relaxed">
-                École d'ingénieur + Alternance pour approfondir mes compétences
-                en
-                <span className="text-blue-300 font-semibold"> cybersécurité</span>,
-                <span className="text-cyan-300 font-semibold"> gestion de projets</span> et
-                <span className="text-blue-400 font-semibold"> lead technique</span>.
+                <span className="text-blue-300 font-semibold">CNAM Paris</span>{" "}
+                — Cycle ingénieur DICASI, en alternance chez{" "}
+                <span className="text-cyan-300 font-semibold">
+                  CNP Assurances
+                </span>{" "}
+                (Unité SI Comptabilité, Fiscalité et Data), pour 3 ans.
               </p>
             </div>
 
-            {/* Alternance */}
+            {/* Alternance actuelle */}
             <div className="bg-slate-900/50 p-6 rounded-2xl border border-slate-800 hover:border-blue-500/30 transition-colors group">
               <div className="flex items-start gap-4">
                 <div className="p-3 bg-blue-500/10 rounded-xl group-hover:bg-blue-500/20 transition-colors">
@@ -124,7 +126,7 @@ const About = () => {
                     The Gill Corporation • Alternance
                   </p>
                   <span className="text-xs text-slate-500 bg-slate-800 px-2 py-1 rounded">
-                    2024 - Présent
+                    2024 - 2026
                   </span>
                   <p className="text-gray-400 text-sm mt-3">
                     Pilotage complet de projets : conception, développement
@@ -150,12 +152,12 @@ const About = () => {
                     IUT de Bayonne
                   </p>
                   <span className="text-xs text-slate-500 bg-slate-800 px-2 py-1 rounded">
-                    2022 - Présent
+                    2022 - 2026
                   </span>
                   <p className="text-gray-400 text-sm mt-3">
                     Spécialisation réalisation d'applications et administration
-                    système. Projets sur différentes stacks (React, Laravel,
-                    Docker, Kubernetes...).
+                    système. Projets sur différentes stacks (Angular, Laravel,
+                    Docker, SQLServer...).
                   </p>
                 </div>
               </div>
